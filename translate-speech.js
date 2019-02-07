@@ -15,8 +15,10 @@ Source:: https://github.com/ampledata/node-red-contrib-azure-translate-speech
 
 var sdk = require('microsoft-cognitiveservices-speech-sdk');
 
-
 module.exports = function(RED) {
+  /*
+  translator
+  */
   function translator(config) {
     RED.nodes.createNode(this, config);
     var node = this;
@@ -26,7 +28,8 @@ module.exports = function(RED) {
       node.status({fill: 'blue', shape: 'dot', text: 'Requesting'});
       node.debug('this.credentials=' + JSON.stringify(this.credentials));
 
-      if (this.credentials === null || this.credentials.key === null || this.credentials.key === "") {
+      if (this.credentials === null || this.credentials.key === null ||
+          this.credentials.key === '') {
         node.error('Input subscription key', msg);
         node.status({
           fill: 'red', shape: 'ring', text: 'Input subscription key'});
@@ -74,12 +77,22 @@ module.exports = function(RED) {
 
       var rEvents = {};
 
-      // Before beginning speech recognition, setup the callbacks to be invoked when an event occurs.
+      /*
+      Before beginning speech recognition, setup the callbacks to be invoked
+      when an event occurs.
+      */
 
-      // The event recognizing signals that an intermediate recognition result is received.
-      // You will receive one or more recognizing events as a speech phrase is recognized, with each containing
-      // more recognized speech. The event will contain the text for the recognition since the last phrase was recognized.
-      // Both the source language text and the translation text(s) are available.
+      /*
+      The event recognizing signals that an intermediate recognition result is
+      received.
+
+      You will receive one or more recognizing events as a speech phrase is
+      recognized, with each containing more recognized speech. The event will
+      contain the text for the recognition since the last phrase was
+      recognized.
+
+      Both the source language text and the translation text(s) are available.
+      */
       recognizer.recognizing = function(s, e) {
         var log = '(Recognizing) reason="';
         log += sdk.ResultReason[e.result.reason] + '" text="' + e.result.text;
@@ -91,10 +104,13 @@ module.exports = function(RED) {
         switch (e.result.reason) {
           case sdk.ResultReason.Canceled:
             node.debug('(Synthesizing) case sdk.ResultReason.Canceled');
-            node.debug('(Synthesizing) reason="' + sdk.ResultReason[e.result.reason]) + '"';
+            node.debug(
+              '(Synthesizing) reason="' + sdk.ResultReason[e.result.reason]) +
+              '"';
             break;
           case sdk.ResultReason.SynthesizingAudio:
-            node.debug('(Synthesizing) case sdk.ResultReason.SynthesizingAudio');
+            node.debug(
+              '(Synthesizing) case sdk.ResultReason.SynthesizingAudio');
             var result = e.result.audio;
             rEvents[synthFragmentCount++] = result;
             // TODO: Probably don't want to return immediately here:
@@ -103,7 +119,9 @@ module.exports = function(RED) {
             node.status({});
             break;
           case sdk.ResultReason.SynthesizingAudioCompleted:
-            node.debug('(Synthesizing) case sdk.ResultReason.SynthesizingAudioCompleted');
+            node.debug(
+              '(Synthesizing) case sdk.ResultReason.SynthesizingAudioCompleted'
+            );
             synthCount++;
             break;
         }
@@ -117,7 +135,6 @@ module.exports = function(RED) {
               node.debug('e.errorDetails=' + e.errorDetails);
               break;
             case sdk.CancellationReason.EndOfStream:
-              //expect(synthCount).toEqual(1);
               canceled = true;
               break;
           }
@@ -134,10 +151,13 @@ module.exports = function(RED) {
         inTurn = false;
       };
 
-      // The event recognized signals that a final recognition result is received.
-      // This is the final event that a phrase has been recognized.
-      // For continuous recognition, you will get one recognized event for each phrase recognized.
-      // Both the source language text and the translation text(s) are available.
+      /*
+      The event recognized signals that a final recognition result is received.
+      This is the final event that a phrase has been recognized.
+      For continuous recognition, you will get one recognized event for each
+      phrase recognized.
+      Both the source language text and the translation text(s) are available.
+      */
       recognizer.recognized = function(s, e) {
         var log = '(Recognized) reason="';
         log += sdk.ResultReason[e.result.reason] + '" text="' + e.result.text;
