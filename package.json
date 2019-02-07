@@ -19,13 +19,13 @@
     }
   },
   "repository": {
-      "type": "git",
-      "url": "https://github.com/orion-labs/node-red-contrib-azure-translate-speech"
+    "type": "git",
+    "url": "https://github.com/orion-labs/node-red-contrib-azure-translate-speech"
   },
   "author": {
-      "name": "Greg Albrecht",
-      "email": "gba@orionlabs.io",
-      "url": "https://www.orionlabs.io"
+    "name": "Greg Albrecht",
+    "email": "gba@orionlabs.io",
+    "url": "https://www.orionlabs.io"
   },
   "url": "https://orionlabs.io",
   "homepage": "https://github.com/orion-labs/node-red-contrib-azure-translate-speech",

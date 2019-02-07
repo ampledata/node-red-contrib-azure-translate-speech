@@ -3,33 +3,21 @@
         category: 'Speech',
         color: '#049580',
         defaults: {
-            to: {
-                value: "en",
-                required: true
-            },
-            from: {
-                value: "en",
-                required: true
-            },
+            to: {value: "es-MX", required: true},
+            from: {value: "en-US", required: true},
             voice: {
-                value: "Zira",
+                value: "Microsoft Server Speech Text to Speech Voice (es-MX, HildaRUS)",
                 required: true
             },
-            name: {
-                value:""
-            }
+            name: {value: ''}
         },
         credentials: {
-           key: {
-               type: "password"
-            }
+           key: {type: 'password'}
         },
         inputs: 1,
         outputs: 1,
-        icon: "translator.png",
-        label: function () {
-            return this.name || "Translate Speech";
-        }
+        icon: 'translator.png',
+        label: function() {return this.name || 'Translate Speech';}
     });
 </script>
 
@@ -83,9 +71,9 @@
            <option value="en-GB">English - GB</option>
            <option value="en-IN">English - IN</option>
            <option value="en-NZ">English - NZ</option>
-           <option value="en-US" selected="selected">English - US</option>
+           <option value="en-US">English - US</option>
            <option value="es-ES">Spanish - ES</option>
-           <option value="es-MX">Spanish - MX</option>
+           <option value="es-MX" selected="selected">Spanish - MX</option>
            <option value="fi-FI">Finnish - FI</option>
            <option value="fr-CA">French - CA</option>
            <option value="fr-FR">French - FR</option>
@@ -112,14 +100,14 @@
           <option value="Microsoft Server Speech Text to Speech Voice (ar-EG, Hoda)">Arabic - EG</option>
           <option value="Microsoft Server Speech Text to Speech Voice (ca-ES, HerenaRUS)">Catalan - ES</option>
           <option value="Microsoft Server Speech Text to Speech Voice (da-DK, HelleRUS)">Danish - DK</option>
-          <option value="Microsoft Server Speech Text to Speech Voice (de-DE, Hedda)" selected="selected">German - DE</option>
+          <option value="Microsoft Server Speech Text to Speech Voice (de-DE, Hedda)">German - DE</option>
           <option value="Microsoft Server Speech Text to Speech Voice (en-AU, Catherine)">English - AU</option>
           <option value="Microsoft Server Speech Text to Speech Voice (en-CA, Linda)">English - CA</option>
           <option value="Microsoft Server Speech Text to Speech Voice (en-GB, Susan, Apollo)">English - GB</option>
           <option value="Microsoft Server Speech Text to Speech Voice (en-IN, Heera, Apollo)">English - IN</option>
           <option value="Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)">English - US</option>
           <option value="Microsoft Server Speech Text to Speech Voice (es-ES, Laura, Apollo)">Spanish - ES</option>
-          <option value="Microsoft Server Speech Text to Speech Voice (es-MX, HildaRUS)">Spanish - MX</option>
+          <option value="Microsoft Server Speech Text to Speech Voice (es-MX, HildaRUS)" selected="selected">Spanish - MX</option>
           <option value="Microsoft Server Speech Text to Speech Voice (fi-FI, HeidiRUS)">Finnish - FI</option>
           <option value="Microsoft Server Speech Text to Speech Voice (fr-CA, Caroline)">French - CA</option>
           <option value="Microsoft Server Speech Text to Speech Voice (fr-FR, Julie, Apollo)">French - FR</option>
@@ -145,24 +133,32 @@
         <input type="password" id="node-input-key" placeholder="Paste subscription key of West US region">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name (Optional)</label>
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="Translator">
-    <p>Translator API in Microsoft Cognitive Services</p>
-    <p>This API calcurates the probability of words in Bing web data.</p>
-    <p><b>Calculate Joint Probability</b>
-        <ul>
-            <li>Input(<code>msg.payload</code>): String data to calculate probability</li>
-            <li>Output(<code>msg.payload</code>): Probability of String data</li>
-        </ul>
-    </p>
-    <p><b>List Available Models</b>
-        <ul>
-            <li>Input: Trigger from inject node</li>
-            <li>Output(<code>msg.payload</code>): List of Models</li>
-        </ul>
-    </p>
+<script type="text/x-red" data-help-name="Translate Speech">
+  <p>
+    Translates Speech between two languages.
+  </p>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">buffer</span></dt>
+    <dd>Binary Buffer of PCM Audio to translate.</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">buffer</span></dt>
+    <dd>Binary Buffer of translated PCM Audio.</dd>
+  </dl>
+
+  <h3>Details</h3>
+    <p>With the appropriate Azure Key, this node will translate speech between
+      two different languages directly, without an intermediate TTS/STT step.
+      </p>
+
+    <p><a href="https://github.com/ampledata/node-red-contrib-azure-translate-speech">More info.</a></p>
 </script>
