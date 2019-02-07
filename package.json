@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-azure-translate-speech",
-  "version": "1.0.0b1",
+  "version": "1.0.0",
   "description": "Microsoft Azure Speech Translation",
   "dependencies": {
     "microsoft-cognitiveservices-speech-sdk": "^1.2.0",
