@@ -1,3 +1,37 @@
+<!-- START azure_speech_translation_config -->
+
+<script type="text/x-red" data-template-name="azure_speech_translation_config">
+  <div class="form-row">
+    <label for="node-config-input-subkey"><i class="icon-bookmark"></i> Subscription Key</label>
+    <input type='text' id="node-config-input-subkey">
+  </div>
+  <div class="form-row">
+      <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+      <input type="text" id="node-config-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="azure_speech_translation_config">
+    <p>These subscription keys are used to access your Cognitive Service API.</p>
+    <p>(<a href="https://www.microsoft.com/cognitive-services" target="_blank">Get Key</a>)</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('azure_speech_translation_config', {
+        category: 'config',
+        defaults: { name: { value: '', required: false } },
+        credentials: { subkey: { type: 'text' } },
+        label: function () {
+            return this.name || this.credentials.subkey;
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        }
+    });
+</script>
+
+<!-- END azure_speech_translation_config -->
+
 <script type="text/javascript">
     RED.nodes.registerType('Translate Speech', {
         category: 'Speech',
@@ -9,15 +43,18 @@
                 value: "Microsoft Server Speech Text to Speech Voice (es-MX, HildaRUS)",
                 required: true
             },
+            azure_speech_translation_config: { value: '', type: 'azure_speech_translation_config' },
             name: {value: ''}
-        },
-        credentials: {
-           key: {type: 'password'}
         },
         inputs: 1,
         outputs: 1,
         icon: 'translator.png',
-        label: function() {return this.name || 'Translate Speech';}
+        label: function () {
+            return this.name || this.from + ' -> ' + this.to;
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        },
     });
 </script>
 
@@ -129,9 +166,10 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-key"><i class="icon-tag"></i> Subscription (<a href="https://www.microsoft.com/cognitive-services" target="_blank">Get key</a>)</label>
-        <input type="password" id="node-input-key" placeholder="Paste subscription key of West US region">
+      <label for="node-input-azure_speech_translation_config"><i class="icon-tag"></i> Key Config</label>
+      <input type='text' id="node-input-azure_speech_translation_config">
     </div>
+
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
